@@ -82,6 +82,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.button9 = new System.Windows.Forms.Button();
+            this.label19 = new System.Windows.Forms.Label();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -542,7 +543,6 @@
             // 
             this.pictureBox1.Controls.Add(this.label13);
             this.pictureBox1.Controls.Add(this.button5);
-            this.pictureBox1.Controls.Add(this.label18);
             this.pictureBox1.Controls.Add(this.label5);
             this.pictureBox1.Controls.Add(this.button3);
             this.pictureBox1.Controls.Add(this.textBox3);
@@ -598,7 +598,7 @@
             this.label18.BackColor = System.Drawing.Color.Transparent;
             this.label18.Font = new System.Drawing.Font("Bookman Old Style", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label18.ForeColor = System.Drawing.Color.Transparent;
-            this.label18.Location = new System.Drawing.Point(323, 13);
+            this.label18.Location = new System.Drawing.Point(604, 9);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(679, 28);
             this.label18.TabIndex = 21;
@@ -747,6 +747,7 @@
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(320, 24);
             this.comboBox1.TabIndex = 4;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             this.comboBox1.TextChanged += new System.EventHandler(this.comboBox1_TextChanged);
             // 
             // button9
@@ -760,6 +761,18 @@
             this.button9.UseVisualStyleBackColor = true;
             this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.BackColor = System.Drawing.Color.Transparent;
+            this.label19.Font = new System.Drawing.Font("Haettenschweiler", 36F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label19.Location = new System.Drawing.Point(455, 0);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(125, 50);
+            this.label19.TabIndex = 32;
+            this.label19.Text = "Seeder";
+            this.label19.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -767,7 +780,9 @@
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Silver;
             this.ClientSize = new System.Drawing.Size(1295, 533);
+            this.Controls.Add(this.label19);
             this.Controls.Add(this.button9);
+            this.Controls.Add(this.label18);
             this.Controls.Add(this.pictureBox4);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.panel4);
@@ -810,6 +825,7 @@
             this.pictureBox1.ResumeLayout(false);
             this.pictureBox1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -868,6 +884,7 @@
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.Label label19;
     }
 }
 

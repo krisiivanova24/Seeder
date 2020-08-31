@@ -21,6 +21,7 @@ namespace WebsiteSearchPrices
         private string today = null;
         private List<string> macList = new List<string>();
         private List<string> IPList = new List<string>();
+        private List<string> siteList = new List<string>();
         private List<string> IDnumberList = new List<string>();
         private bool whetherIsNew;
         private DateTime validuntil;
@@ -349,6 +350,33 @@ namespace WebsiteSearchPrices
                 whetherIsNew = true;
             }
             return whetherIsNew;
+        }
+
+        public List<string> SELECTsites(string thisidnumber)
+        {
+            try
+            {
+                if (this.OpenConnection() == true)
+                {
+                    MySqlCommand comm = new MySqlCommand($"SELECT * FROM SitePrice.sites where idnumber = '{thisidnumber}';", connection);
+                    MySqlDataReader reader = comm.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        siteList.Add(reader.GetValue(0).ToString());
+                    }
+                    reader.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                Global.SendError(e);
+            }
+            finally
+            {
+                //close connection
+                this.CloseConnection();
+            }
+            return siteList;
         }
 
         public bool SELECTMac(string thisMac)

@@ -35,6 +35,7 @@ namespace WebsiteSearchPrices
         List<string> emails = new List<string>();
         Dictionary<string, string> allUrls = new Dictionary<string, string>();
         private System.Timers.Timer timer;
+        private System.Timers.Timer timer2;
         Global globalItems;
         #endregion
 
@@ -50,13 +51,19 @@ namespace WebsiteSearchPrices
                 emails = dbhelper.SELECTemails(idnumber);
                 globalItems = new Global(emails);
                 InitializeDB();
-                dbhelper.InitializeDB();
+                dbhelper.InitializeDB();                
                 MySQL_ToDatagridview();
                 TakeInfo();
+
                 timer = new System.Timers.Timer();
                 timer.Interval = 1000 * hourTimer * 60 * 60;
                 timer.Elapsed += new System.Timers.ElapsedEventHandler(timer_Elapsed);
                 timer.Start();
+
+                timer2 = new System.Timers.Timer();
+                timer2.Interval = 1000 * 60;
+                timer2.Elapsed += new System.Timers.ElapsedEventHandler(timer2_Elapsed);
+                timer2.Start();
             }
             catch (Exception e)
             {
@@ -75,9 +82,26 @@ namespace WebsiteSearchPrices
             pictureBox4.BackColor = Color.Transparent;
             pictureBox1.Controls.Add(panel2);
             panel2.BackColor = Color.Transparent;
+            pictureBox1.Controls.Add(label18);
+            label18.BackColor = Color.Transparent;
+            pictureBox1.Controls.Add(label19);
+            label19.BackColor = Color.Transparent;
         }
         #endregion
-
+        void timer2_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            if (dbhelper.SELECTValidUntil(idnumber))
+            {
+                MyMethodAsync();
+                TakeInfo();
+            }
+            else
+            {
+                Application.Exit();//koe da e pyrvo
+                MessageBox.Show("Абонаментът Ви е изтекъл! Моля, закупете нов!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                
+            }
+        }
 
         void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
@@ -88,6 +112,7 @@ namespace WebsiteSearchPrices
             else
             {
                 MessageBox.Show("Абонаментът Ви е изтекъл! Моля, закупете нов!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                Application.Exit();
             }
         }
         private async Task MyMethodAsync()
@@ -706,7 +731,7 @@ namespace WebsiteSearchPrices
             }
             try
             {
-                this.label12.Text = "Последна проверка: " + DateTime.Now;
+                this.label12.Text = "Последна проверка: " + DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
                 dbhelper.CompNewUPDATE();
                 TakeInfo();
                 MySQL_ToDatagridview();
@@ -858,6 +883,7 @@ namespace WebsiteSearchPrices
                     dataReader.Close();
 
                     dataGridView1.DataSource = bSource;
+                    Control.CheckForIllegalCrossThreadCalls = false; //ne znam dali go ima no ne dava greshka
                 }
             }
             catch (Exception e)
@@ -1667,6 +1693,11 @@ namespace WebsiteSearchPrices
             {
                 dataGridView1.Rows.RemoveAt(row.Index);
             }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
