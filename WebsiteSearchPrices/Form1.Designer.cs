@@ -69,7 +69,6 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label13 = new System.Windows.Forms.Label();
             this.button5 = new System.Windows.Forms.Button();
-            this.label18 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.textBox3 = new System.Windows.Forms.TextBox();
@@ -81,6 +80,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label18 = new System.Windows.Forms.Label();
             this.button9 = new System.Windows.Forms.Button();
             this.label19 = new System.Windows.Forms.Label();
             this.panel4.SuspendLayout();
@@ -281,6 +281,7 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(678, 70);
             this.textBox2.TabIndex = 6;
+            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // label12
             // 
@@ -592,18 +593,6 @@
             this.button5.UseVisualStyleBackColor = false;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.BackColor = System.Drawing.Color.Transparent;
-            this.label18.Font = new System.Drawing.Font("Bookman Old Style", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label18.ForeColor = System.Drawing.Color.Transparent;
-            this.label18.Location = new System.Drawing.Point(604, 9);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(679, 28);
-            this.label18.TabIndex = 21;
-            this.label18.Text = "СИСТЕМА ЗА СЛЕДЕНЕ НА ЦЕНИТЕ НА АРТИКУЛИ";
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -638,6 +627,7 @@
             this.textBox3.Size = new System.Drawing.Size(320, 21);
             this.textBox3.TabIndex = 14;
             this.textBox3.Tag = "";
+            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // label9
             // 
@@ -749,6 +739,18 @@
             this.comboBox1.TabIndex = 4;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             this.comboBox1.TextChanged += new System.EventHandler(this.comboBox1_TextChanged);
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.BackColor = System.Drawing.Color.Transparent;
+            this.label18.Font = new System.Drawing.Font("Bookman Old Style", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label18.ForeColor = System.Drawing.Color.Transparent;
+            this.label18.Location = new System.Drawing.Point(604, 9);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(679, 28);
+            this.label18.TabIndex = 21;
+            this.label18.Text = "СИСТЕМА ЗА СЛЕДЕНЕ НА ЦЕНИТЕ НА АРТИКУЛИ";
             // 
             // button9
             // 

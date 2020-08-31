@@ -126,14 +126,19 @@ namespace WebsiteSearchPrices
             {
                 if (textBox1.Text == "")
                 {
-                    MessageBox.Show($"Моля, първо въведете идентификационен номер!", "Email sent", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show($"Моля, първо въведете идентификационен номер!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else if (dbheper.HasSpecialChar(textBox1.Text))
+                {
+                    MessageBox.Show($"Моля, не въвеждайте специални знаци!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    textBox1.Text = "";
                 }
                 else if (dbheper.SELECTIDnumber(textBox1.Text) || !dbheper.SELECTValidUntil(textBox1.Text))
                 {
                     dbheper.INSERTcompinfo(" ", GetMacAddress(), GetIPAddress());
                     textBox1.Text = "";
-                    MessageBox.Show($"Не съществува такъв номер в системата или абонаментът е изтекъл. Моля, закупете нов!", "Email sent", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                    MessageBox.Show($"Не съществува такъв номер в системата или абонаментът е изтекъл. Моля, закупете нов!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }                
                 else
                 {
                     var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
@@ -164,7 +169,6 @@ namespace WebsiteSearchPrices
             }
 
         }
-
         private void button3_Click(object sender, EventArgs e)
         {
             try

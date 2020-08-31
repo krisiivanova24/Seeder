@@ -51,7 +51,7 @@ namespace WebsiteSearchPrices
                 emails = dbhelper.SELECTemails(idnumber);
                 globalItems = new Global(emails);
                 InitializeDB();
-                dbhelper.InitializeDB();                
+                dbhelper.InitializeDB();
                 MySQL_ToDatagridview();
                 TakeInfo();
 
@@ -61,7 +61,7 @@ namespace WebsiteSearchPrices
                 timer.Start();
 
                 timer2 = new System.Timers.Timer();
-                timer2.Interval = 1000 * 60;
+                timer2.Interval = 1000 * 5 * 60;
                 timer2.Elapsed += new System.Timers.ElapsedEventHandler(timer2_Elapsed);
                 timer2.Start();
             }
@@ -99,7 +99,7 @@ namespace WebsiteSearchPrices
             {
                 Application.Exit();//koe da e pyrvo
                 MessageBox.Show("Абонаментът Ви е изтекъл! Моля, закупете нов!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                
+
             }
         }
 
@@ -910,26 +910,33 @@ namespace WebsiteSearchPrices
 
         private void button2_Click(object sender, EventArgs e)//ask button
         {
-            try
+            if (textBox2.Text != "")
             {
-                SmtpClient client1 = new SmtpClient();
-                client1.Port = 587;
-                client1.Host = "smtp.gmail.com";
-                client1.EnableSsl = true;
-                client1.DeliveryMethod = SmtpDeliveryMethod.Network;
-                client1.UseDefaultCredentials = false;
-                client1.Credentials = new NetworkCredential("WebPriceViewer@gmail.com", "Web.1234");
+                try
+                {
+                    SmtpClient client1 = new SmtpClient();
+                    client1.Port = 587;
+                    client1.Host = "smtp.gmail.com";
+                    client1.EnableSsl = true;
+                    client1.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    client1.UseDefaultCredentials = false;
+                    client1.Credentials = new NetworkCredential("WebPriceViewer@gmail.com", "Web.1234");
 
-                MailMessage mm1 = new MailMessage("donotreply@domain.com", $"ivoradev14@gmail.com", $"Съобщение по проект", $"{textBox2.Text}");
-                client1.Send(mm1);
+                    MailMessage mm1 = new MailMessage("donotreply@domain.com", $"ivoradev14@gmail.com", $"Съобщение по проект", $"{textBox2.Text}");
+                    client1.Send(mm1);
 
-                client1.Dispose();
-                MessageBox.Show("Съобщението Ви е успешно изпратено до разработчих!", "Successfully", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                textBox2.Text = null;
+                    client1.Dispose();
+                    MessageBox.Show("Съобщението Ви е успешно изпратено до разработчих!", "Successfully", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    textBox2.Text = null;
+                }
+                catch (Exception ex)
+                {
+                    Global.SendError(ex);
+                }
             }
-            catch (Exception ex)
+            else
             {
-                Global.SendError(ex);
+                MessageBox.Show($"Моля, първо въведете съобщение!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -947,42 +954,49 @@ namespace WebsiteSearchPrices
 
         private void button3_Click(object sender, EventArgs e)
         {
-            try
+            if (textBox3.Text != "" && textBox1.Text != "")
             {
-                if (label8.Text != "0" && textBox1.Text != "" && comboBox1.Text != "" && textBox3.Text != "")
+                try
                 {
-                    string query = $"INSERT INTO Price (name, url, site, price, date, idnumber, specialid) VALUES('{Encoding.UTF8.GetString(Encoding.UTF8.GetBytes(textBox3.Text))}', '{textBox1.Text}', '{comboBox1.Text}', '{Encoding.UTF8.GetString(Encoding.UTF8.GetBytes(label8.Text))}','{DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss")}', '{idnumber}', '{dbhelper.GenerateIDnumber()}')";
-                    //open connection
-                    if (this.OpenConnection() == true)
+                    if (label8.Text != "0" && textBox1.Text != "" && comboBox1.Text != "" && textBox3.Text != "")
                     {
-                        //create command and assign the query and connection from the constructor
-                        MySqlCommand cmd = new MySqlCommand(query, connection);
+                        string query = $"INSERT INTO Price (name, url, site, price, date, idnumber, specialid) VALUES('{Encoding.UTF8.GetString(Encoding.UTF8.GetBytes(textBox3.Text))}', '{textBox1.Text}', '{comboBox1.Text}', '{Encoding.UTF8.GetString(Encoding.UTF8.GetBytes(label8.Text))}','{DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss")}', '{idnumber}', '{dbhelper.GenerateIDnumber()}')";
+                        //open connection
+                        if (this.OpenConnection() == true)
+                        {
+                            //create command and assign the query and connection from the constructor
+                            MySqlCommand cmd = new MySqlCommand(query, connection);
 
-                        //Execute command
-                        cmd.ExecuteNonQuery();
-                        cmd.Dispose();
+                            //Execute command
+                            cmd.ExecuteNonQuery();
+                            cmd.Dispose();
+                        }
+                        MessageBox.Show("Успешно добавихте новия линк!", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.CloseConnection();
+                        MySQL_ToDatagridview();
+                        textBox1.Text = "";
+                        //comboBox1.Text = "";
+                        textBox3.Text = "";
+                        label8.Text = "0";
                     }
-                    MessageBox.Show("Успешно добавихте новия линк!", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.CloseConnection();
-                    MySQL_ToDatagridview();
-                    textBox1.Text = "";
-                    //comboBox1.Text = "";
-                    textBox3.Text = "";
-                    label8.Text = "0";
+                    else
+                    {
+                        MessageBox.Show("Моля, проверете дали не сте изпуснали въвеждането на някои данни!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Моля, проверете дали не сте изпуснали въвеждането на някои данни!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Global.SendError(ex);
+                }
+                finally
+                {
+                    //close connection
+                    this.CloseConnection();
                 }
             }
-            catch (Exception ex)
+            else
             {
-                Global.SendError(ex);
-            }
-            finally
-            {
-                //close connection
-                this.CloseConnection();
+                MessageBox.Show($"Моля, първо въведете съобщение!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -1497,7 +1511,7 @@ namespace WebsiteSearchPrices
         {
             try
             {
-                if (textBox4.Text != null)
+                if (textBox4.Text != "" && !dbhelper.HasSpecialChar(textBox4.Text))
                 {
                     string query = $"UPDATE SitePrice.info SET timerinfo='{textBox4.Text}' WHERE idnumber ='{idnumber}'";
                     //Open connection
@@ -1526,6 +1540,11 @@ namespace WebsiteSearchPrices
                     }
 
                 }
+                else
+                {
+                    MessageBox.Show($"Моля, не въвеждайте специални знаци и не натискайте бутона преди да въведете часове!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    textBox4.Text = "";
+                }
             }
             catch (Exception ex)
             {
@@ -1541,6 +1560,11 @@ namespace WebsiteSearchPrices
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             comboBox1.Text = "Избери сайт";
+            if (dbhelper.HasSpecialChar(textBox1.Text))
+            {
+                MessageBox.Show($"Моля, не въвеждайте специални знаци!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                textBox1.Text = "";
+            }
         }
 
         private void button5_Click(object sender, EventArgs e)//info
@@ -1698,6 +1722,42 @@ namespace WebsiteSearchPrices
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+            if (dbhelper.HasSpecialChar(textBox3.Text))
+            {
+                MessageBox.Show($"Моля, не въвеждайте специални знаци!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                textBox3.Text = "";
+            }
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            if (dbhelper.HasSpecialChar(textBox2.Text))
+            {
+                MessageBox.Show($"Моля, не въвеждайте специални знаци!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                textBox2.Text = "";
+            }
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+            if (dbhelper.HasSpecialChar(textBox4.Text))
+            {
+                MessageBox.Show($"Моля, не въвеждайте специални знаци!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                textBox4.Text = "";
+            }
+        }
+
+        private void textBox5_TextChanged(object sender, EventArgs e)
+        {
+            if (dbhelper.HasSpecialChar(textBox5.Text))
+            {
+                MessageBox.Show($"Моля, не въвеждайте специални знаци!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                textBox5.Text = "";
+            }
         }
     }
 }
