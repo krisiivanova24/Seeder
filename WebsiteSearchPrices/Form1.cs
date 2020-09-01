@@ -13,6 +13,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Mail;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Security.Policy;
 using System.Text;
@@ -33,6 +34,7 @@ namespace WebsiteSearchPrices
         private DBhelper dbhelper;
         private string idnumber;
         List<string> emails = new List<string>();
+        List<string>sites = new List<string>();
         Dictionary<string, string> allUrls = new Dictionary<string, string>();
         private System.Timers.Timer timer;
         private System.Timers.Timer timer2;
@@ -54,6 +56,7 @@ namespace WebsiteSearchPrices
                 dbhelper.InitializeDB();
                 MySQL_ToDatagridview();
                 TakeInfo();
+                sites = dbhelper.SELECTsites(idnumber).ToList();
 
                 timer = new System.Timers.Timer();
                 timer.Interval = 1000 * hourTimer * 60 * 60;
@@ -64,6 +67,11 @@ namespace WebsiteSearchPrices
                 timer2.Interval = 1000 * 5 * 60;
                 timer2.Elapsed += new System.Timers.ElapsedEventHandler(timer2_Elapsed);
                 timer2.Start();
+
+                foreach (var site in sites)
+                {
+                    comboBox1.Items.Add(site);
+                }
             }
             catch (Exception e)
             {
@@ -90,30 +98,45 @@ namespace WebsiteSearchPrices
         #endregion
         void timer2_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            if (dbhelper.SELECTValidUntil(idnumber))
+            if (!dbhelper.SELECTValidUntil(idnumber) || dbhelper.SELECTclosetapp(idnumber))
             {
-                MyMethodAsync();
-                TakeInfo();
+                Application.Exit();
             }
-            else
+            else if(dbhelper.SELECTrestartapp(idnumber))
             {
-                Application.Exit();//koe da e pyrvo
-                MessageBox.Show("Абонаментът Ви е изтекъл! Моля, закупете нов!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-
+                RestartProgram();
             }
         }
 
         void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            if (dbhelper.SELECTValidUntil(idnumber))
+            if (!dbhelper.SELECTValidUntil(idnumber) || dbhelper.SELECTclosetapp(idnumber))
             {
-                MyMethodAsync();
+                Application.Exit();                
+            }
+            else if (dbhelper.SELECTrestartapp(idnumber))
+            {
+                RestartProgram();
             }
             else
             {
-                MessageBox.Show("Абонаментът Ви е изтекъл! Моля, закупете нов!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                Application.Exit();
+                MyMethodAsync();
             }
+        }
+        private void RestartProgram()
+        {
+            // Get file path of current process 
+            var filePath = Assembly.GetExecutingAssembly().Location;
+            //var filePath = Application.ExecutablePath;  // for WinForms
+
+            // Start program
+            Process.Start(filePath);
+
+            // For Windows Forms app
+            Application.Exit();
+
+            // For all Windows application but typically for Console app.
+            //Environment.Exit(0);
         }
         private async Task MyMethodAsync()
         {
@@ -975,7 +998,7 @@ namespace WebsiteSearchPrices
                         this.CloseConnection();
                         MySQL_ToDatagridview();
                         textBox1.Text = "";
-                        //comboBox1.Text = "";
+                        comboBox1.Text = "Избери сайт";
                         textBox3.Text = "";
                         label8.Text = "0";
                     }
@@ -1396,7 +1419,7 @@ namespace WebsiteSearchPrices
         private void comboBox1_TextChanged(object sender, EventArgs e)
         {
             try
-            {
+            { 
                 if (comboBox1.Text == "Mebelino")
                 {
                     Mebelino();

@@ -25,6 +25,7 @@ namespace WebsiteSearchPrices
         private List<string> IDnumberList = new List<string>();
         private bool whetherIsNew;
         private DateTime validuntil;
+        private string check;
         private List<string> invalidChars = new List<string>() { "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "<", ">", ",", "\"", "\'", "+", "=", "}", "{", "]", "[" };
         #endregion
 
@@ -358,7 +359,7 @@ namespace WebsiteSearchPrices
             {
                 if (this.OpenConnection() == true)
                 {
-                    MySqlCommand comm = new MySqlCommand($"SELECT * FROM SitePrice.sites where idnumber = '{thisidnumber}';", connection);
+                    MySqlCommand comm = new MySqlCommand($"SELECT sitename FROM SitePrice.sites where idnumber = '{thisidnumber}';", connection);
                     MySqlDataReader reader = comm.ExecuteReader();
                     while (reader.Read())
                     {
@@ -377,6 +378,78 @@ namespace WebsiteSearchPrices
                 this.CloseConnection();
             }
             return siteList;
+        }
+
+        public bool SELECTrestartapp(string thisdnumber)
+        {
+            whetherIsNew = false;
+            try
+            {
+                if (this.OpenConnection() == true)
+                {
+                    MySqlCommand comm = new MySqlCommand($"SELECT restartapp FROM restart where idnumber = '{thisdnumber}';", connection);
+                    MySqlDataReader reader = comm.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        check = reader.GetValue(0).ToString();
+                    }
+                    reader.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                Global.SendError(e);
+            }
+            finally
+            {
+                //close connection
+                this.CloseConnection();
+            }
+            if (check == "1")
+            {
+                whetherIsNew = true;
+            }
+            else
+            {
+                whetherIsNew = false;
+            }
+            return whetherIsNew;
+        }
+
+        public bool SELECTclosetapp(string thisdnumber)
+        {
+            whetherIsNew = false;
+            try
+            {
+                if (this.OpenConnection() == true)
+                {
+                    MySqlCommand comm = new MySqlCommand($"SELECT closeapp FROM restart where idnumber = '{thisdnumber}';", connection);
+                    MySqlDataReader reader = comm.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        check = reader.GetValue(0).ToString();
+                    }
+                    reader.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                Global.SendError(e);
+            }
+            finally
+            {
+                //close connection
+                this.CloseConnection();
+            }
+            if (check == "1")
+            {
+                whetherIsNew = true;
+            }
+            else
+            {
+                whetherIsNew = false;
+            }
+            return whetherIsNew;
         }
 
         public bool SELECTMac(string thisMac)
@@ -482,7 +555,7 @@ namespace WebsiteSearchPrices
             whetherIsNew = false;
             try
             {
-                string specialChar = @"\|!#$%&/()=?»«£§€{}+*/-;'<>_,";
+                string specialChar = @"\|!#$%&()=?»«£§€{}+*;'<>_,";
                 foreach (var item in specialChar)
                 {
                     if (input.Contains(item))
