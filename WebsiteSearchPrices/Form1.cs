@@ -43,11 +43,11 @@ namespace WebsiteSearchPrices
 
         #region FORMLOAD
         public Form1()
-        {
-            InitializeComponent();
-            InitializeButtonsAccess();
+        {            
             try
             {
+                InitializeComponent();
+                InitializeButtonsAccess();
                 idnumber = ConfigurationManager.ConnectionStrings["IDNumber"].ConnectionString;
                 dbhelper = new DBhelper();
                 emails = dbhelper.SELECTemails(idnumber);
@@ -904,8 +904,9 @@ namespace WebsiteSearchPrices
 
                     //close Data Reader
                     dataReader.Close();
-
+                    
                     dataGridView1.DataSource = bSource;
+                    this.dataGridView1.Columns[4].Visible = false;
                     Control.CheckForIllegalCrossThreadCalls = false; //ne znam dali go ima no ne dava greshka
                 }
             }

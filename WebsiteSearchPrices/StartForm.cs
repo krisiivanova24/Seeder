@@ -21,10 +21,10 @@ namespace WebsiteSearchPrices
         String firstMacAddress;
         DBhelper dbheper = new DBhelper();
         public StartForm()
-        {
-            InitializeComponent();
+        {            
             try
             {
+                InitializeComponent();
                 if (CheckForInternetConnection())
                 {
                     dbheper.InitializeDB();
