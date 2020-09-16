@@ -164,6 +164,35 @@ namespace WebsiteSearchPrices
 
         #region INSERT
 
+        public void INSERTnewChangePrice(string specialId, string newPrice)
+        {
+            try
+            {
+                this.today = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
+
+                string query = $"INSERT INTO SitePrice.changes (specialid, updateprice, changedate) VALUES('{specialId}', '{newPrice}', '{this.today}')";
+
+                //open connection
+                if (this.OpenConnection() == true)
+                {
+                    //create command and assign the query and connection from the constructor
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+
+                    //Execute command
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                Global.SendError(e);
+            }
+            finally
+            {
+                //close connection
+                this.CloseConnection();
+            }
+        }
+
         public void INSERTcompinfo(string thisIDnumber, string thisMACaddess, string thisIPaddress) //works
         {
             try
