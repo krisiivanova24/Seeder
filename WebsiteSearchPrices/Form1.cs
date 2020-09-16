@@ -169,7 +169,7 @@ namespace WebsiteSearchPrices
                                     globalItems.SendEmailWithChange(item, price);
 
                                     item.Price = price;
-                                    updatePrice(item.Url, price);
+                                    updatePrice(item.SpecialId, item.Url, price);
                                     MySQL_ToDatagridview();
                                 }
                                 catch (Exception e)
@@ -208,7 +208,7 @@ namespace WebsiteSearchPrices
                                     globalItems.SendEmailWithChange(item, price);
 
                                     item.Price = price;
-                                    updatePrice(item.Url, price);
+                                    updatePrice(item.SpecialId, item.Url, price);
                                     MySQL_ToDatagridview();
                                 }
                                 catch (Exception e)
@@ -247,7 +247,7 @@ namespace WebsiteSearchPrices
                                     globalItems.SendEmailWithChange(item, price);
 
                                     item.Price = price;
-                                    updatePrice(item.Url, price);
+                                    updatePrice(item.SpecialId, item.Url, price);
                                     MySQL_ToDatagridview();
                                 }
                                 catch (Exception e)
@@ -286,7 +286,7 @@ namespace WebsiteSearchPrices
                                     globalItems.SendEmailWithChange(item, price);
 
                                     item.Price = price;
-                                    updatePrice(item.Url, price);
+                                    updatePrice(item.SpecialId, item.Url, price);
                                     MySQL_ToDatagridview();
                                 }
                                 catch (Exception e)
@@ -325,7 +325,7 @@ namespace WebsiteSearchPrices
                                     globalItems.SendEmailWithChange(item, price);
 
                                     item.Price = price;
-                                    updatePrice(item.Url, price);
+                                    updatePrice(item.SpecialId, item.Url, price);
                                     MySQL_ToDatagridview();
                                 }
                                 catch (Exception e)
@@ -364,7 +364,7 @@ namespace WebsiteSearchPrices
                                     globalItems.SendEmailWithChange(item, price);
 
                                     item.Price = price;
-                                    updatePrice(item.Url, price);
+                                    updatePrice(item.SpecialId, item.Url, price);
                                     MySQL_ToDatagridview();
                                 }
                                 catch (Exception e)
@@ -412,7 +412,7 @@ namespace WebsiteSearchPrices
                                     globalItems.SendEmailWithChange(item, price);
 
                                     item.Price = price;
-                                    updatePrice(item.Url, price);
+                                    updatePrice(item.SpecialId, item.Url, price);
                                     MySQL_ToDatagridview();
                                 }
                                 catch (Exception e)
@@ -451,7 +451,7 @@ namespace WebsiteSearchPrices
                                     globalItems.SendEmailWithChange(item, price);
 
                                     item.Price = price;
-                                    updatePrice(item.Url, price);
+                                    updatePrice(item.SpecialId, item.Url, price);
                                     MySQL_ToDatagridview();
                                 }
                                 catch (Exception e)
@@ -491,7 +491,7 @@ namespace WebsiteSearchPrices
                                     globalItems.SendEmailWithChange(item, price);
 
                                     item.Price = price;
-                                    updatePrice(item.Url, price);
+                                    updatePrice(item.SpecialId, item.Url, price);
                                     MySQL_ToDatagridview();
                                 }
                                 catch (Exception e)
@@ -541,7 +541,7 @@ namespace WebsiteSearchPrices
                                     globalItems.SendEmailWithChange(item, price);
 
                                     item.Price = price;
-                                    updatePrice(item.Url, price);
+                                    updatePrice(item.SpecialId, item.Url, price);
                                     MySQL_ToDatagridview();
                                 }
                                 catch (Exception e)
@@ -579,7 +579,7 @@ namespace WebsiteSearchPrices
                                     globalItems.SendEmailWithChange(item, price);
 
                                     item.Price = price;
-                                    updatePrice(item.Url, price);
+                                    updatePrice(item.SpecialId, item.Url, price);
                                     MySQL_ToDatagridview();
                                 }
                                 catch (Exception e)
@@ -617,7 +617,7 @@ namespace WebsiteSearchPrices
                                     globalItems.SendEmailWithChange(item, price);
 
                                     item.Price = price;
-                                    updatePrice(item.Url, price);
+                                    updatePrice(item.SpecialId, item.Url, price);
                                     MySQL_ToDatagridview();
                                 }
                                 catch (Exception e)
@@ -652,7 +652,7 @@ namespace WebsiteSearchPrices
                                     globalItems.SendEmailWithChange(item, price);
 
                                     item.Price = price;
-                                    updatePrice(item.Url, price);
+                                    updatePrice(item.SpecialId, item.Url, price);
                                     MySQL_ToDatagridview();
                                 }
                                 catch (Exception e)
@@ -700,7 +700,7 @@ namespace WebsiteSearchPrices
                                     globalItems.SendEmailWithChange(item, price);
 
                                     item.Price = price;
-                                    updatePrice(item.Url, price);
+                                    updatePrice(item.SpecialId, item.Url, price);
                                     MySQL_ToDatagridview();
                                 }
                                 catch (Exception e)
@@ -736,7 +736,7 @@ namespace WebsiteSearchPrices
                                     globalItems.SendEmailWithChange(item, price);
 
                                     item.Price = price;
-                                    updatePrice(item.Url, price);
+                                    updatePrice(item.SpecialId, item.Url, price);
                                     MySQL_ToDatagridview();
                                 }
                                 catch (Exception e)
@@ -775,7 +775,7 @@ namespace WebsiteSearchPrices
             }
         }
 
-        private void updatePrice(string url, string price)
+        private void updatePrice(string specialid, string url, string price)
         {
             try
             {
@@ -899,7 +899,7 @@ namespace WebsiteSearchPrices
                     while (dataReader.Read())
                     {
                         if (!Sites.Any(x => x.Url == dataReader["url"].ToString()))
-                            this.Sites.Add(new Sites(dataReader["name"].ToString(), dataReader["url"].ToString(), dataReader["site"].ToString(), dataReader["price"].ToString(), dataReader["date"].ToString()));
+                            this.Sites.Add(new Sites(dataReader["name"].ToString(), dataReader["url"].ToString(), dataReader["site"].ToString(), dataReader["price"].ToString(), dataReader["date"].ToString(), dataReader["specialid"].ToString()));
                     }
 
                     //close Data Reader
