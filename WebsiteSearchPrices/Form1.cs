@@ -795,6 +795,7 @@ namespace WebsiteSearchPrices
                     cmd.ExecuteNonQuery();
                     cmd.Dispose();
                 }
+                dbhelper.INSERTnewChangePrice(specialid, price);
             }
             catch (Exception ex)
             {
@@ -984,7 +985,8 @@ namespace WebsiteSearchPrices
                 {
                     if (label8.Text != "0" && textBox1.Text != "" && comboBox1.Text != "" && textBox3.Text != "")
                     {
-                        string query = $"INSERT INTO Price (name, url, site, price, date, idnumber, specialid) VALUES('{Encoding.UTF8.GetString(Encoding.UTF8.GetBytes(textBox3.Text))}', '{textBox1.Text}', '{comboBox1.Text}', '{Encoding.UTF8.GetString(Encoding.UTF8.GetBytes(label8.Text))}','{DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss")}', '{idnumber}', '{dbhelper.GenerateIDnumber()}')";
+                        string specialId = dbhelper.GenerateIDnumber();
+                        string query = $"INSERT INTO Price (name, url, site, price, date, idnumber, specialid) VALUES('{Encoding.UTF8.GetString(Encoding.UTF8.GetBytes(textBox3.Text))}', '{textBox1.Text}', '{comboBox1.Text}', '{Encoding.UTF8.GetString(Encoding.UTF8.GetBytes(label8.Text))}','{DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss")}', '{idnumber}', '{specialId}')";
                         //open connection
                         if (this.OpenConnection() == true)
                         {
@@ -998,6 +1000,7 @@ namespace WebsiteSearchPrices
                         MessageBox.Show("Успешно добавихте новия линк!", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.CloseConnection();
                         MySQL_ToDatagridview();
+                        dbhelper.INSERTnewChangePrice(specialId, label8.Text);
                         textBox1.Text = "";
                         comboBox1.Text = "Избери сайт";
                         textBox3.Text = "";
