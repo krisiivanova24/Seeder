@@ -584,7 +584,7 @@ namespace WebsiteSearchPrices
             whetherIsNew = false;
             try
             {
-                string specialChar = @"\|!#$%&()=?»«£§€{}+*;'<>_,";
+                string specialChar = @"\""\|*'";
                 foreach (var item in specialChar)
                 {
                     if (input.Contains(item))

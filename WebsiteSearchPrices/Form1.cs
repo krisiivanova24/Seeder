@@ -1425,6 +1425,8 @@ namespace WebsiteSearchPrices
         }
         private void comboBox1_TextChanged(object sender, EventArgs e)
         {
+            if (textBox1.Text == string.Empty)
+                return;
             try
             { 
                 if (comboBox1.Text == "Mebelino")
