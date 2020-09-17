@@ -39,30 +39,42 @@ namespace WebsiteSearchPrices
 
                 client.Send(mm);
 
+                client.Dispose();
                 MessageBox.Show($"Установена е грешка в системата. Успешно е изпратен имейл до разработчиците.", "Email sent", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception)
             {
-
+                throw new Exception();
             }
         }
 
         public void SendEmailWithChange(Sites item, string price)
         {
-            SmtpClient client1 = new SmtpClient();
-            client1.Port = 587;
-            client1.Host = "smtp.gmail.com";
-            client1.EnableSsl = true;
-            client1.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client1.UseDefaultCredentials = false;
-            client1.Credentials = new NetworkCredential("WebPriceViewer@gmail.com", "Web.1234");
-
-            foreach (var email in emails) 
+            try
             {
-                MailMessage mm = new MailMessage("donotreply@domain.com", email, $"Засечена е промяна в цената на {DateTime.Now}", $"\nИме:{item.Name} \nАртикул: {item.Url} \nОт сайт: {item.SiteType} \nПредишна цена: {item.Price} на дата: {item.Date} \nСегашна цена: {price} \nВ базата данни ще бъде записана новата стойност");
-                client1.Send(mm); 
+                SmtpClient client1 = new SmtpClient();
+                client1.Port = 587;
+                client1.Host = "smtp.gmail.com";
+                client1.EnableSsl = true;
+                client1.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client1.UseDefaultCredentials = false;
+                client1.Credentials = new System.Net.NetworkCredential(ConfigurationManager.ConnectionStrings["EmailAdmin"].ConnectionString,
+                        ConfigurationManager.ConnectionStrings["PasswordAdmin"].ConnectionString);
+
+                foreach (var email in emails)
+                {
+                    MailMessage mm = new MailMessage("donotreply@domain.com", email, $"Засечена е промяна в цената на {DateTime.Now}", $"\nИме:{item.Name} \nАртикул: {item.Url} \nОт сайт: {item.SiteType} \nПредишна цена: {item.Price} на дата: {item.Date} \nСегашна цена: {price} \nВ базата данни ще бъде записана новата стойност");
+                    mm.BodyEncoding = UTF8Encoding.UTF8;
+                    mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+                    client1.Send(mm);
+                }
+                client1.Dispose();
             }
-            client1.Dispose();
+            catch (Exception x)
+            {
+                SendError(x);
+            }
+
         }
     }
 }

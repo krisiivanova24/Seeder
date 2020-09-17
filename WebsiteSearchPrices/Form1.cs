@@ -945,9 +945,12 @@ namespace WebsiteSearchPrices
                     client1.EnableSsl = true;
                     client1.DeliveryMethod = SmtpDeliveryMethod.Network;
                     client1.UseDefaultCredentials = false;
-                    client1.Credentials = new NetworkCredential("WebPriceViewer@gmail.com", "Web.1234");
+                    client1.Credentials = new System.Net.NetworkCredential(ConfigurationManager.ConnectionStrings["EmailAdmin"].ConnectionString,
+                            ConfigurationManager.ConnectionStrings["PasswordAdmin"].ConnectionString);
 
                     MailMessage mm1 = new MailMessage("donotreply@domain.com", $"ivoradev14@gmail.com", $"Съобщение по проект", $"{textBox2.Text}");
+                    mm1.BodyEncoding = UTF8Encoding.UTF8;
+                    mm1.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
                     client1.Send(mm1);
 
                     client1.Dispose();
