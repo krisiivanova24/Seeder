@@ -76,7 +76,7 @@ namespace WebsiteSearchPrices
             catch (Exception e)
             {
                 Global.SendError(e);
-            }
+            }            
         }
 
         private void InitializeButtonsAccess()
