@@ -99,6 +99,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_17A094586F5548E3A5BABB1FC9DA0B18"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_1C5D4C9215329D6607A1774942048BE9"
         "OwnerKey" = "8:_DC1DD6DB0EF34806B2EBDBEA845D050A"
         "MsmSig" = "8:_UNDEFINED"
@@ -886,12 +892,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_8D2E1D3BB1C819C97CD98EDD0624F189"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_DC1DD6DB0EF34806B2EBDBEA845D050A"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1615,6 +1615,12 @@
         "OwnerKey" = "8:_06737C182DD4FA0B8F63A11F63BBF011"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_8D2E1D3BB1C819C97CD98EDD0624F189"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -1640,6 +1646,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
             }
         }
         "Release"
@@ -1664,6 +1678,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
             }
         }
     }
@@ -2095,6 +2117,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_17A094586F5548E3A5BABB1FC9DA0B18"
+            {
+            "SourcePath" = "8:..\\WebsiteSearchPrices\\Resources\\my.ico"
+            "TargetName" = "8:my.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_6B6C861035DA4C69B986718390F6DE8E"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1C5D4C9215329D6607A1774942048BE9"
@@ -5613,9 +5655,9 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:SeederSetup"
+        "ProductName" = "8:SEEDER"
         "ProductCode" = "8:{83A8377A-1697-448F-B6D0-5E10E23F9BC0}"
-        "PackageCode" = "8:{4A03AF3D-342D-4279-86ED-E235C806AD6C}"
+        "PackageCode" = "8:{F320B5D3-7D69-481F-8C15-9B7A313FD82A}"
         "UpgradeCode" = "8:{7A97EB11-002D-4960-BCD2-7B1A440162F4}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -5623,12 +5665,12 @@
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:Default Company Name"
+        "Manufacturer" = "8:SEEDER Manufacturer"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:SeederSetup"
+        "Title" = "8:SEEDER Setup"
         "Subject" = "8:"
-        "ARPCONTACT" = "8:Default Company Name"
+        "ARPCONTACT" = "8:KiI & Co."
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
@@ -5746,7 +5788,7 @@
             "Target" = "8:_DC1DD6DB0EF34806B2EBDBEA845D050A"
             "Folder" = "8:_E13BD9822719414598463F1EAD4F123A"
             "WorkingFolder" = "8:_6B6C861035DA4C69B986718390F6DE8E"
-            "Icon" = "8:_8B1A37D0079C4AAA9F1E3B625D72B743"
+            "Icon" = "8:_17A094586F5548E3A5BABB1FC9DA0B18"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_DACAFC21D7FF4520AEE593EE923FD9EF"
@@ -5760,7 +5802,7 @@
             "Target" = "8:_DC1DD6DB0EF34806B2EBDBEA845D050A"
             "Folder" = "8:_E2F6311AF72D40C98A8F79EE137B087A"
             "WorkingFolder" = "8:_6B6C861035DA4C69B986718390F6DE8E"
-            "Icon" = "8:_8B1A37D0079C4AAA9F1E3B625D72B743"
+            "Icon" = "8:_17A094586F5548E3A5BABB1FC9DA0B18"
             "Feature" = "8:"
             }
         }
