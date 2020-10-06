@@ -288,7 +288,9 @@ namespace WebsiteSearchPrices
                     MySqlDataReader reader = comm.ExecuteReader();
                     while (reader.Read())
                     {
-                        validuntil = DateTime.Parse(reader.GetValue(0).ToString());
+                        List<string> validList = reader.GetValue(0).ToString().Split('.').ToList();
+                        //validuntil = DateTime.Parse(reader.GetValue(0).ToString());
+                        validuntil = new DateTime(int.Parse(validList[2]), int.Parse(validList[1]), int.Parse(validList[0]));
                     }
                     reader.Close();
                 }
@@ -302,7 +304,7 @@ namespace WebsiteSearchPrices
             {
                 this.CloseConnection();
             }
-            if (validuntil >= DateTime.Parse(DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss")))
+            if (validuntil >= DateTime.Parse(DateTime.Now.ToString()))
             {
                 whetherIsNew = true;
             }
@@ -355,7 +357,6 @@ namespace WebsiteSearchPrices
                 {
                     MySqlCommand comm = new MySqlCommand("SELECT idnumber FROM abonaments;", connection);
                     MySqlDataReader reader = comm.ExecuteReader();
-                    int i = 0;
                     while (reader.Read())
                     {
                         IDnumberList.Add(reader.GetValue(0).ToString());
@@ -489,7 +490,6 @@ namespace WebsiteSearchPrices
                 {
                     MySqlCommand comm = new MySqlCommand("SELECT macaddress FROM comp;", connection);
                     MySqlDataReader reader = comm.ExecuteReader();
-                    int i = 0;
                     while (reader.Read())
                     {
                         macList.Add(reader.GetValue(0).ToString());
@@ -525,7 +525,6 @@ namespace WebsiteSearchPrices
                 {
                     MySqlCommand comm = new MySqlCommand("SELECT macaddress FROM comp;", connection);
                     MySqlDataReader reader = comm.ExecuteReader();
-                    int i = 0;
                     while (reader.Read())
                     {
                         macList.Add(reader.GetValue(0).ToString());
@@ -548,7 +547,6 @@ namespace WebsiteSearchPrices
                 {
                     MySqlCommand comm = new MySqlCommand("SELECT ipaddress FROM comp;", connection);
                     MySqlDataReader reader = comm.ExecuteReader();
-                    int i = 0;
                     while (reader.Read())
                     {
                         IPList.Add(reader.GetValue(0).ToString());
