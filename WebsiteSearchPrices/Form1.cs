@@ -954,12 +954,12 @@ namespace WebsiteSearchPrices
                     client1.Send(mm1);
 
                     client1.Dispose();
-                    MessageBox.Show("Съобщението Ви е успешно изпратено до разработчих!", "Successfully", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Съобщението Ви е успешно изпратено до разработчик!", "Successfully", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     textBox2.Text = null;
                 }
                 catch (Exception ex)
                 {
-                    Global.SendError(ex);
+                    MessageBox.Show("Изпратено е съобщение до разработчик!", "Message",MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             else
@@ -982,52 +982,61 @@ namespace WebsiteSearchPrices
 
         private void button3_Click(object sender, EventArgs e)
         {
-            if (textBox3.Text != "" && textBox1.Text != "")
+            if (label8.Text != "")
             {
-                try
+                if (textBox3.Text != "" && textBox1.Text != "")
                 {
-                    if (label8.Text != "0" && textBox1.Text != "" && comboBox1.Text != "" && textBox3.Text != "")
+                    try
                     {
-                        string specialId = dbhelper.GenerateIDnumber();
-                        string query = $"INSERT INTO Price (name, url, site, price, date, idnumber, specialid) VALUES('{Encoding.UTF8.GetString(Encoding.UTF8.GetBytes(textBox3.Text))}', '{textBox1.Text}', '{comboBox1.Text}', '{Encoding.UTF8.GetString(Encoding.UTF8.GetBytes(label8.Text))}','{DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss")}', '{idnumber}', '{specialId}')";
-                        //open connection
-                        if (this.OpenConnection() == true)
+                        if (label8.Text != "0" && textBox1.Text != "" && comboBox1.Text != "" && textBox3.Text != "")
                         {
-                            //create command and assign the query and connection from the constructor
-                            MySqlCommand cmd = new MySqlCommand(query, connection);
+                            string specialId = dbhelper.GenerateIDnumber();
+                            string query = $"INSERT INTO Price (name, url, site, price, date, idnumber, specialid) VALUES('{Encoding.UTF8.GetString(Encoding.UTF8.GetBytes(textBox3.Text))}', '{textBox1.Text}', '{comboBox1.Text}', '{Encoding.UTF8.GetString(Encoding.UTF8.GetBytes(label8.Text))}','{DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss")}', '{idnumber}', '{specialId}')";
+                            //open connection
+                            if (this.OpenConnection() == true)
+                            {
+                                //create command and assign the query and connection from the constructor
+                                MySqlCommand cmd = new MySqlCommand(query, connection);
 
-                            //Execute command
-                            cmd.ExecuteNonQuery();
-                            cmd.Dispose();
+                                //Execute command
+                                cmd.ExecuteNonQuery();
+                                cmd.Dispose();
+                            }
+                            MessageBox.Show("Успешно добавихте новия линк!", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            this.CloseConnection();
+                            MySQL_ToDatagridview();
+                            dbhelper.INSERTnewChangePrice(specialId, label8.Text);
+                            textBox1.Text = "";
+                            comboBox1.Text = "Избери сайт";
+                            textBox3.Text = "";
+                            label8.Text = "0";
                         }
-                        MessageBox.Show("Успешно добавихте новия линк!", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        this.CloseConnection();
-                        MySQL_ToDatagridview();
-                        dbhelper.INSERTnewChangePrice(specialId, label8.Text);
-                        textBox1.Text = "";
-                        comboBox1.Text = "Избери сайт";
-                        textBox3.Text = "";
-                        label8.Text = "0";
+                        else
+                        {
+                            MessageBox.Show("Моля, проверете дали не сте изпуснали въвеждането на някои данни!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        MessageBox.Show("Моля, проверете дали не сте изпуснали въвеждането на някои данни!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Global.SendError(ex);
+                    }
+                    finally
+                    {
+                        //close connection
+                        this.CloseConnection();
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-                    Global.SendError(ex);
-                }
-                finally
-                {
-                    //close connection
-                    this.CloseConnection();
+                    MessageBox.Show($"Моля, първо въведете съобщение!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             else
             {
-                MessageBox.Show($"Моля, първо въведете съобщение!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"Моля, първо изберете правилния сайт!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             }
+
         }
 
         private void Mebelino()
